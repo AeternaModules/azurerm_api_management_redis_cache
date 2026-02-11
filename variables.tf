@@ -15,7 +15,7 @@ EOT
     api_management_id = string
     connection_string = string
     name              = string
-    cache_location    = optional(string, "default")
+    cache_location    = optional(string) # Default: "default"
     description       = optional(string)
     redis_cache_id    = optional(string)
   }))
