@@ -19,5 +19,37 @@ EOT
     description       = optional(string)
     redis_cache_id    = optional(string)
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.api_management_redis_caches : (
+        length(v.connection_string) > 0
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.api_management_redis_caches : (
+        v.description == null || (length(v.description) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  # --- Unconfirmed validation candidates, derived from azurerm_api_management_redis_cache's provider source ---
+  # Not auto-enabled: either a bespoke provider validator we can't safely translate,
+  # or a path that crosses a list-typed block (needs its own for_each wrapping).
+  # Review, translate into a real validation{} block above, and delete once confirmed.
+  # path: name
+  #   source:    [from validate.ApiManagementChildName] !matched
+  # path: api_management_id
+  #   source:    [from apimanagementservice.ValidateServiceID] !ok
+  # path: api_management_id
+  #   source:    [from apimanagementservice.ValidateServiceID] err != nil
+  # path: redis_cache_id
+  #   source:    [from azure.ValidateResourceID] !ok
+  # path: redis_cache_id
+  #   source:    [from azure.ValidateResourceID] err != nil
+  # path: cache_location
+  #   source:    [from validate.RedisCacheLocation] !ok
 }
 
