@@ -4,6 +4,8 @@ Map of api_management_redis_caches, attributes below
 Required:
     - api_management_id
     - connection_string
+    - connection_string_key_vault_id (alternative to connection_string - read from Key Vault instead)
+    - connection_string_key_vault_secret_name (alternative to connection_string - read from Key Vault instead)
     - name
 Optional:
     - cache_location
@@ -12,12 +14,14 @@ Optional:
 EOT
 
   type = map(object({
-    api_management_id = string
-    connection_string = string
-    name              = string
-    cache_location    = optional(string) # Default: "default"
-    description       = optional(string)
-    redis_cache_id    = optional(string)
+    api_management_id                       = string
+    connection_string                       = string
+    connection_string_key_vault_id          = optional(string)
+    connection_string_key_vault_secret_name = optional(string)
+    name                                    = string
+    cache_location                          = optional(string) # Default: "default"
+    description                             = optional(string)
+    redis_cache_id                          = optional(string)
   }))
   validation {
     condition = alltrue([
