@@ -1,3 +1,7 @@
+output "api_management_redis_caches_id" {
+  description = "Map of id values across all api_management_redis_caches, keyed the same as var.api_management_redis_caches"
+  value       = { for k, v in azurerm_api_management_redis_cache.api_management_redis_caches : k => v.id }
+}
 output "api_management_redis_caches_api_management_id" {
   description = "Map of api_management_id values across all api_management_redis_caches, keyed the same as var.api_management_redis_caches"
   value       = { for k, v in azurerm_api_management_redis_cache.api_management_redis_caches : k => v.api_management_id }
